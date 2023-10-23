@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="weather_style.css">
+    <!-- importing the font used -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tilt+Neon&display=swap" rel="stylesheet">
+
+    <title>Weather World</title>
+</head>
+
+<body>
+    <div class="nav">
+        <nav>
+            <div class="name">
+                <img src="/web_assets/logo.jpg" alt="weblogo">
+                <h1>Stefano nebo</h1>
+            </div>
+            <ul class="navlinks">
+                <li><a href="#"><img src="/web_assets/github.png" alt="git"></a></li>
+                <li><a href="#"><img src="/web_assets/WA.png" alt="wahtsapp"></a></li>
+                <li><a href="#">About</a></li>
+            </ul>
+        </nav>
+    </div>
+    <div class="siteintro">
+        <h1>Find out what the weather's like...</h1>
+    </div>
+    <div class="container">
+        <div class="info_side">
+            <!-- the searchbar and searchbox -->
+            <div class="searchbar">
+                <input type="text" placeholder="city name" spellcheck="false">
+                <button>
+                    <img src="/web_assets/search_icon.png" alt="">
+                </button>
+            </div>
+            <div class="city_info">
+                <div class="city">
+                    <h3 class="city_name">Lagos,</h3>
+                    <h3 class="temp">22</h3>
+                    <h3 id="deg">&degc</h3>
+                    <div class="details">
+                        <div class="col">
+                            <img src="/web_assets/humid_icon.png" alt="">
+                            <div>
+                                <p class="humidity">30%</p>
+                                <p>humidity</p>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <img src="/web_assets/wind_icon.png" alt="">
+                            <div>
+                                <p class="wind">15mph</p>
+                                <p>Winds</p>
+                            </div>
+                            <!-- class(city_name), id(temp), class(humidity), class(wind) -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- the main weather image -->
+        <div class="weather">
+            <img class="weather_icon" src="/web_assets/cloudy.png">
+        </div>
+    </div>
+
+    </div>
+
+
+    <script>
+        const APIKEY = "71a856806f1e08163e68cb0701019179";
+        const APIURL = "https://api.openweathermap.org/data/2.5/weather?units=metric&q="
+        const searchbox = document.querySelector(".searchbar input")
+        const searchbtn = document.querySelector(".searchbar button")
+        const weatherIcon = document.querySelector(".weather_icon")
+
+        async function checkWeather(city) {
+            const response = await fetch(APIURL + city + `&appid=${APIKEY}`); //pings the api
+            var data = await response.json() //stores the api response
+
+            // console.log(data) //debuging api call
+
+            //change the values with values in the json file
+            document.querySelector(".city_name").innerHTML = data.name + ",";
+            document.querySelector(".temp").innerHTML = Math.round(data.main.temp);
+            document.querySelector(".humidity").innerHTML = `${data.main.humidity}%`;
+            document.querySelector(".wind").innerHTML = `${data.wind.speed}mph`;
+
+            if (data.weather[0].main == "Clouds") {
+                weatherIcon.src = "/web_assets/cloudy.png"
+            }
+            else if (data.weather[0].main == "Rain") {
+                weatherIcon.src = "/web_assets/thunder_storm.png"
+                if (data.weather[0].icon == "09d" || data.weather[0].icon == "10n") {
+                    weatherIcon.src = "/web_assets/rainfall.png"
+                }
+            }
+            else if (data.weather[0].main == "Clear") {
+                weatherIcon.src = "/web_assets/sunshine.png"
+                //finish this
+            } else if (data.weather[0].main == "Thunderstorm") {
+                weatherIcon.src = "/web_assets/thunder.png"
+            } else if (data.weather[0].main == "Snow") {
+                weatherIcon.src = "/web_assets/snowy.png"
+            } else if (data.weather[0].main == "Clouds" && (data.weather[0].icon == "04d" || data.weather[0].icon == "04n")) {
+                weatherIcon.src = "/web_assets/very_cloudy.png"
+            }
+        }
+        searchbtn.addEventListener("click", () => {
+            checkWeather(searchbox.value);
+        })
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,14 @@
+Hi, this is a simple weather site that calls openweather api and returns a portion of the response
+
+useful #####
+font used: Tilt Neon
+Weather icons main: "hand drawn weather effects" by feepik
+    <a href="https://www.freepik.com/free-vector/hand-drawn-weather-effects_18774000.htm#query=weather&position=46&from_view=search&track=sph">Freepik</a>
+search and other icon: gotten from icons8
+//css file has not been cleaned, and there might be alot of redundant decorations
+//the script file is in the html file, this is done to keep project organized
+// icons and images are stored in the web_assets folder
+
+// the about section should bring up a popup that contains information about the site and what its used for
+#note the weather icons used for rain and thunderstorm might not be too accurate due to the lack of weather icons.
+I'd appreciate any help i can get
